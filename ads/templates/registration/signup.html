@@ -20,3 +20,16 @@
     </div>
 </div>
 {% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем класс is-invalid для полей с ошибками
+    const errorFields = document.querySelectorAll('.invalid-feedback');
+    errorFields.forEach(function(field) {
+        const input = field.previousElementSibling;
+        if (input) {
+            input.classList.add('is-invalid');
+        }
+    });
+});
+</script>

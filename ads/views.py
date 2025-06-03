@@ -259,8 +259,15 @@ class SignUpView(CreateView):
         messages.success(self.request, 'Регистрация прошла успешно! Добро пожаловать!')
         return response
 
+
 class CustomLogoutView(View):
     def get(self, request):
+        return self.logout_user(request)
+
+    def post(self, request):
+        return self.logout_user(request)
+
+    def logout_user(self, request):
         logout(request)
         messages.success(request, 'Вы успешно вышли из системы')
         return redirect('ad-list')
