@@ -12,7 +12,7 @@ from .forms import AdForm, ExchangeProposalForm
 from django.views.generic import View
 from django.contrib.auth import logout
 from django import forms
-
+from .forms import RussianUserCreationForm
 class AdListView(ListView):
     model = Ad
     template_name = 'ads/ad_list.html'
@@ -249,7 +249,7 @@ class ExchangeProposalDetailView(LoginRequiredMixin, DetailView):
 
 class SignUpView(CreateView):
     model = User
-    form_class = UserCreationForm
+    form_class = RussianUserCreationForm  # Используем кастомную форму с русскими сообщениями
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('ad-list')
 
@@ -258,6 +258,13 @@ class SignUpView(CreateView):
         login(self.request, self.object)
         messages.success(self.request, 'Регистрация прошла успешно! Добро пожаловать!')
         return response
+
+    def form_invalid(self, form):
+        # Добавляем сообщения об ошибках
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label}: {error}")
+        return super().form_invalid(form)
 
 
 class CustomLogoutView(View):
