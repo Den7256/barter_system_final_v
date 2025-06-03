@@ -1,0 +1,104 @@
+{% extends 'ads/base.html' %}
+
+{% block title %}Все объявления{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Все объявления</h1>
+    <a href="{% url 'ad-create' %}" class="btn btn-success">Добавить объявление</a>
+</div>
+
+<form method="get" class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <input type="text" name="search" class="form-control" placeholder="Поиск по названию или описанию" 
+                   value="{{ search_query }}">
+        </div>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">Все категории</option>
+                {% for value, name in categories %}
+                    <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="condition" class="form-select">
+                <option value="">Любое состояние</option>
+                {% for value, name in conditions %}
+                    <option value="{{ value }}" {% if selected_condition == value %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="mt-3 text-end">
+        <button type="submit" class="btn btn-primary">Применить фильтры</button>
+        <a href="{% url 'ad-list' %}" class="btn btn-outline-secondary">Сбросить</a>
+    </div>
+</form>
+
+{% if ads %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for ad in ads %}
+            <div class="col">
+                <div class="card h-100 ad-card">
+                    {% if ad.image_url %}
+                        <img src="{{ ad.image_url }}" class="card-img-top" alt="{{ ad.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">Нет изображения</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.title }}</h5>
+                        <p class="card-text text-truncate">{{ ad.description }}</p>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-info">{{ ad.get_category_display }}</span>
+                            <span class="badge bg-secondary">{{ ad.get_condition_display }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ ad.created_at|date:"d.m.Y H:i" }}</small>
+                            <small>{{ ad.user.username }}</small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{% url 'ad-detail' ad.pk %}" class="btn btn-sm btn-outline-primary w-100">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; первая</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item active">
+                <span class="page-link">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+            
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">следующая</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% else %}
+    <div class="alert alert-info">
+        Объявлений не найдено. Попробуйте изменить параметры поиска.
+    </div>
+{% endif %}
+{% endblock %}

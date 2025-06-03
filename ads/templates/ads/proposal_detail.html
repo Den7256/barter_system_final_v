@@ -1,0 +1,141 @@
+{% extends 'ads/base.html' %}
+
+{% block title %}Предложение обмена #{{ proposal.id }}{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h2 class="mb-0">Предложение обмена #{{ proposal.id }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Предлагаемый товар</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if ad_sender %}
+                            <h4>{{ ad_sender.title }}</h4>
+                            <p>{{ ad_sender.description }}</p>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-info">{{ ad_sender.get_category_display }}</span>
+                                <span class="badge bg-secondary">{{ ad_sender.get_condition_display }}</span>
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">От пользователя: {{ ad_sender.user.username }}</small>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Объявление было удалено
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white">
+                        {% if ad_sender %}
+                            <a href="{% url 'ad-detail' ad_sender.pk %}"
+                               class="btn btn-sm btn-outline-primary w-100">
+                                <i class="bi bi-eye"></i> Подробнее
+                            </a>
+                        {% else %}
+                            <button class="btn btn-sm btn-outline-secondary w-100" disabled>
+                                <i class="bi bi-eye-slash"></i> Подробнее
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Запрашиваемый товар</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if ad_receiver %}
+                            <h4>{{ ad_receiver.title }}</h4>
+                            <p>{{ ad_receiver.description }}</p>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-info">{{ ad_receiver.get_category_display }}</span>
+                                <span class="badge bg-secondary">{{ ad_receiver.get_condition_display }}</span>
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">Ваше объявление</small>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Объявление было удалено
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white">
+                        {% if ad_receiver %}
+                            <a href="{% url 'ad-detail' ad_receiver.pk %}"
+                               class="btn btn-sm btn-outline-primary w-100">
+                                <i class="bi bi-eye"></i> Подробнее
+                            </a>
+                        {% else %}
+                            <button class="btn btn-sm btn-outline-secondary w-100" disabled>
+                                <i class="bi bi-eye-slash"></i> Подробнее
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Детали предложения</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Статус:</strong>
+                            <span class="badge
+                                {% if proposal.status == 'pending' %}bg-warning
+                                {% elif proposal.status == 'accepted' %}bg-success
+                                {% else %}bg-danger{% endif %} fs-5">
+                                {{ proposal.get_status_display }}
+                            </span>
+                        </p>
+                        <p><strong>Дата создания:</strong> {{ proposal.created_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Отправитель:</strong>
+                            {% if ad_sender %}
+                                {{ ad_sender.user.username }}
+                            {% else %}
+                                <span class="text-muted">Удаленный пользователь</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Получатель:</strong>
+                            {% if ad_receiver %}
+                                {{ ad_receiver.user.username }}
+                            {% else %}
+                                <span class="text-muted">Удаленный пользователь</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <p><strong>Комментарий:</strong></p>
+                <div class="border p-3 bg-light rounded">
+                    {{ proposal.comment|linebreaks }}
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'proposal-list' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Вернуться к списку
+            </a>
+
+            {% if can_update %}
+                <a href="{% url 'proposal-update' proposal.id %}" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i> Изменить статус
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

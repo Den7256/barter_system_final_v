@@ -1,0 +1,81 @@
+{% extends 'ads/base.html' %}
+
+{% block title %}Создать предложение обмена{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">Предложение обмена</h2>
+            </div>
+            <div class="card-body">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Мое предложение</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="id_ad_sender">{{ form.ad_sender.label }}</label>
+                                        {{ form.ad_sender }}
+                                        {% if form.ad_sender.errors %}
+                                            <div class="text-danger">
+                                                {{ form.ad_sender.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Запрашиваемый товар</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h4>{{ ad_receiver.title }}</h4>
+                                    <p>{{ ad_receiver.description|truncatewords:20 }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="badge bg-info">{{ ad_receiver.get_category_display }}</span>
+                                        <span class="badge bg-secondary">{{ ad_receiver.get_condition_display }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_comment">{{ form.comment.label }}</label>
+                        {{ form.comment }}
+                        {% if form.comment.errors %}
+                            <div class="text-danger">
+                                {{ form.comment.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="submit" class="btn btn-success">Отправить предложение</button>
+                        <a href="{% url 'ad-detail' ad_receiver.pk %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
