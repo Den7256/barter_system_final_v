@@ -14,7 +14,8 @@ git clone https://github.com/Den7256/barter_system_final_v
 Создать виртуальное окружение:
 
 bash
-```python -m venv venv
+```
+python -m venv venv
 source venv/bin/activate  # Linux/MacOS
 venv\Scripts\activate  # Windows
 ```
