@@ -10,7 +10,7 @@
 1. Клонировать репозиторий:
 ```bash
 git clone https://github.com/yourusername/barter_system.git
-cd barter_system
+```
 Создать виртуальное окружение:
 
 bash
