@@ -22,16 +22,23 @@ venv\Scripts\activate  # Windows
 
 
 bash
-```pip install -r requirements.txt```
+```pip install -r requirements.txt
+```
+
 Выполнить миграции:
 
 bash
-```python manage.py migrate```
+```python manage.py migrate
+```
+
 Создать суперпользователя (по желанию):
 
 bash
-```python manage.py createsuperuser```
+```python manage.py createsuperuser
+```
+
 Запустить сервер:
 
 bash
-```python manage.py runserver```
+```python manage.py runserver
+```
