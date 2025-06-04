@@ -27,17 +27,14 @@ bash
 Выполнить миграции:
 
 bash
-```python manage.py migrate
-```
+```python manage.py migrate```
 
 Создать суперпользователя (по желанию):
 
 bash
-```python manage.py createsuperuser
-```
+```python manage.py createsuperuser```
 
 Запустить сервер:
 
 bash
-```python manage.py runserver
-```
+```python manage.py runserver```
