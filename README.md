@@ -14,22 +14,22 @@ git clone https://github.com/yourusername/barter_system.git
 Создать виртуальное окружение:
 
 bash
-python -m venv venv
+```python -m venv venv
 source venv/bin/activate  # Linux/MacOS
-venv\Scripts\activate  # Windows
+venv\Scripts\activate  # Windows```
 Установить зависимости:
 
 bash
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 Выполнить миграции:
 
 bash
-python manage.py migrate
-Создать суперпользователя (опционально):
+```python manage.py migrate```
+Создать суперпользователя (по желанию):
 
 bash
-python manage.py createsuperuser
+```python manage.py createsuperuser```
 Запустить сервер:
 
 bash
-python manage.py runserver
+```python manage.py runserver```
