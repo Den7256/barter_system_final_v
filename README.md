@@ -9,7 +9,7 @@
 ## Установка
 1. Клонировать репозиторий:
 ```bash
-git clone https://github.com/yourusername/barter_system.git
+git clone https://github.com/Den7256/barter_system_final_v
 ```
 Создать виртуальное окружение:
 
