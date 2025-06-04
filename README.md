@@ -23,6 +23,7 @@ venv\Scripts\activate  # Windows
 
 bash
 ```pip install -r requirements.txt
+
 ```
 
 Выполнить миграции:
