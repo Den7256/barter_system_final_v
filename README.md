@@ -16,8 +16,10 @@ git clone https://github.com/yourusername/barter_system.git
 bash
 ```python -m venv venv
 source venv/bin/activate  # Linux/MacOS
-venv\Scripts\activate  # Windows```
+venv\Scripts\activate  # Windows
+```
 Установить зависимости:
+
 
 bash
 ```pip install -r requirements.txt```
