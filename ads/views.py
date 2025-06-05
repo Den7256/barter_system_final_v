@@ -7,12 +7,15 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .models import Ad, ExchangeProposal
-from .forms import AdForm, ExchangeProposalForm
 from django.views.generic import View
 from django.contrib.auth import logout
 from django import forms
 from .forms import RussianUserCreationForm
+
+from .models import Ad, ExchangeProposal
+from .forms import AdForm, ExchangeProposalForm
+
+
 class AdListView(ListView):
     model = Ad
     template_name = 'ads/ad_list.html'
@@ -165,6 +168,7 @@ class ExchangeProposalCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('proposal-detail', kwargs={'pk': self.object.pk})
 
+
 class ExchangeProposalStatusForm(forms.ModelForm):
     class Meta:
         model = ExchangeProposal
@@ -175,6 +179,7 @@ class ExchangeProposalStatusForm(forms.ModelForm):
         labels = {
             'status': 'Новый статус',
         }
+
 
 class ExchangeProposalUpdateView(LoginRequiredMixin, UpdateView):
     model = ExchangeProposal
@@ -244,7 +249,6 @@ class ExchangeProposalDetailView(LoginRequiredMixin, DetailView):
         context['ad_receiver'] = proposal.ad_receiver
 
         return context
-
 
 
 class SignUpView(CreateView):

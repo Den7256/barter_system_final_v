@@ -1,8 +1,10 @@
 from django import forms
-from .models import Ad, ExchangeProposal
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
+from .models import Ad, ExchangeProposal
+
 
 class RussianUserCreationForm(UserCreationForm):
     username = forms.CharField(
@@ -50,6 +52,7 @@ class RussianUserCreationForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError("Пароли не совпадают")
         return password2
+
 
 class AdForm(forms.ModelForm):
     class Meta:
