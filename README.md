@@ -39,3 +39,6 @@ bash
 
 bash
 ```python manage.py runserver```
+
+## Тестирование
+```python manage.py test```
