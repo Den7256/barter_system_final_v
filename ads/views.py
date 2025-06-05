@@ -10,10 +10,10 @@ from django.contrib.auth import login
 from django.views.generic import View
 from django.contrib.auth import logout
 from django import forms
-from .forms import RussianUserCreationForm
 
 from .models import Ad, ExchangeProposal
 from .forms import AdForm, ExchangeProposalForm
+from .forms import RussianUserCreationForm
 
 
 class AdListView(ListView):
